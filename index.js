@@ -46,21 +46,30 @@ class Game extends Component {
         this.guess = this.guess.bind(this);
         this.start = this.start.bind(this);
     }
+    getNextNumber() {
+        if (this.state.nextNumber !== undefined) {
+            const number = this.state.nextNumber;
+            this.setState({nextNumber: undefined});
+            return number;
+        }
+        return getRandom(1, 5);
+    }
     guess(value) {
         console.assert(this.state.number !== undefined);
         const isSuccess = value === this.state.number;
+        if (!isSuccess) {
+            navigator.vibrate(200);
+            this.setState({nextNumber: this.state.number});
+        }
         this.setState({
             fullscreen: isSuccess ? 'success' : 'fail',
             number: undefined,
         });
-        if (!isSuccess) {
-            navigator.vibrate(200);
-        }
     }
     start() {
         this.setState({
             fullscreen: undefined,
-            number: getRandom(1, 5),
+            number: this.getNextNumber(),
         });
     }
     renderInner(number) {

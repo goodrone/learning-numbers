@@ -31,6 +31,9 @@ h1 {
     margin-bottom: 10px;
     color: black;
     flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .buttons {
     text-align: center;

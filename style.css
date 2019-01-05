@@ -41,13 +41,14 @@ h1 {
 .buttons {
     text-align: center;
 }
+@import url('//fonts.googleapis.com/css?family=Roboto+Black');
 button {
     background: #fea;
     border-radius: 10px;
-    padding: 4px;
-    font-size: 200%;
-    width: 2em;
-    height: 2em;
+    padding: 4px 15px;
+    font-size: 40px;
     margin: 4px;
     border: none;
+    font-family: "Roboto Black", sans-serif;
+    font-weight: 900;
 }

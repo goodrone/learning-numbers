@@ -14,7 +14,7 @@ const getRange = n => Array.from(Array(n).keys());
 const Figures = ({ number }) => {
     return (
         <div>{getRange(number).map(() => {
-            return "⚫";
+            return <span>&#x26ab; </span>;
         })}</div>
     );
 }

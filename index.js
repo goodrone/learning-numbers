@@ -1,6 +1,12 @@
 import './style';
 import { Component } from 'preact';
 
+function disableViewportZoom() {
+    const viewport = document.querySelector("meta[name=viewport]");
+    const oldValue = viewport.getAttribute("content");
+    viewport.setAttribute("content", oldValue + ",user-scalable=no");
+}
+
 const getRandom = (a, b) => {
     return Math.floor(Math.random() * (b - a + 1)) + a;
 }
@@ -91,6 +97,9 @@ class Game extends Component {
 }
 
 export default class App extends Component {
+    componentDidMount() {
+        disableViewportZoom();
+    }
     render() {
         return <Game/>;
     }

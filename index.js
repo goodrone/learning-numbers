@@ -57,21 +57,19 @@ class Game extends Component {
                 </div>
             );
         }
-        return (
-            <div>
-                <div className="display"><Figures number={number}/></div>
-                <div className="buttons">
-                    {getRange(9).map(i => {
-                        const value = i + 1;
-                        return (
-                            <button type="button" onClick={() => this.guess(value)}>
-                                {value}
-                            </button>
-                        );
-                    })}
-                </div>
+        return [
+            <div className="display"><Figures number={number}/></div>,
+            <div className="buttons">
+                {getRange(9).map(i => {
+                    const value = i + 1;
+                    return (
+                        <button type="button" onClick={() => this.guess(value)}>
+                            {value}
+                        </button>
+                    );
+                })}
             </div>
-        );
+        ];
     }
     render({}, { number, fullscreen }) {
         const fullscreenClass = fullscreen === undefined ? "" : fullscreen;

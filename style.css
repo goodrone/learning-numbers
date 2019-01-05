@@ -13,6 +13,8 @@ h1 {
     background: #111;
     padding: 10px;
     color: white;
+    display: flex;
+    flex-direction: column;
 }
 .fullscreen.success {
     background: #161;
@@ -28,6 +30,7 @@ h1 {
     text-align: center;
     margin-bottom: 10px;
     color: black;
+    flex: 1;
 }
 .buttons {
     text-align: center;

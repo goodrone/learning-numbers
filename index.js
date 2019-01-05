@@ -7,8 +7,21 @@ function disableViewportZoom() {
     viewport.setAttribute("content", oldValue + ",user-scalable=no");
 }
 
-const getRandom = (a, b) => {
-    return Math.floor(Math.random() * (b - a + 1)) + a;
+class RandomGenerator {
+    constructor(values, noRepeat) {
+        this.pool = Array.from(values);
+        this.noRepeat = noRepeat;
+        this.history = [];
+    }
+    next() {
+        if (this.history.length > this.noRepeat) {
+            this.pool.push(this.history.shift());
+        }
+        const index = Math.floor(Math.random() * this.pool.length);
+        const value = this.pool.splice(index, 1)[0];
+        this.history.push(value);
+        return value;
+    }
 }
 
 const PlayButton = ({ onClick }) => {
@@ -33,6 +46,8 @@ const Figures = ({ number }) => {
     );
 }
 
+const knownNumbers = [1, 2, 3, 4, 5];
+
 const BigSign = ({ symbol, color }) => {
     const style = color === undefined ? "" : `color: ${color}`;
     return <div className="display" style={style}>{symbol}</div>;
@@ -46,6 +61,7 @@ class Game extends Component {
         super(props);
         this.guess = this.guess.bind(this);
         this.start = this.start.bind(this);
+        this.random = new RandomGenerator(knownNumbers, 2);
     }
     getNextNumber() {
         if (this.state.nextNumber !== undefined) {
@@ -53,7 +69,7 @@ class Game extends Component {
             this.setState({nextNumber: undefined});
             return number;
         }
-        return getRandom(1, 5);
+        return this.random.next();
     }
     guess(value) {
         console.assert(this.state.number !== undefined);
@@ -84,8 +100,7 @@ class Game extends Component {
         return [
             <div className="display"><Figures number={number}/></div>,
             <div className="buttons">
-                {getRange(5).map(i => {
-                    const value = i + 1;
+                {knownNumbers.map(value => {
                     return (
                         <button type="button" onClick={() => this.guess(value)}>
                             {value}

@@ -1,6 +1,5 @@
 import './style';
 import { Component } from 'preact';
-import linkState from 'linkState';
 
 const getRandom = (a, b) => {
     return Math.floor(Math.random() * (b - a + 1)) + a;

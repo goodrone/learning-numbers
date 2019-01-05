@@ -33,11 +33,12 @@ const Figures = ({ number }) => {
     );
 }
 
-const BigSign = ({ symbol }) => {
-    return <div className="display">{symbol}</div>;
+const BigSign = ({ symbol, color }) => {
+    const style = color === undefined ? "" : `color: ${color}`;
+    return <div className="display" style={style}>{symbol}</div>;
 }
 
-const Success = () => <BigSign symbol="✓"/>;
+const Success = () => <BigSign color="green" symbol="✓"/>;
 const Fail = () => <BigSign symbol="&#x274C;"/>;
 
 class Game extends Component {

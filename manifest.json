@@ -1,6 +1,6 @@
 {
-  "name": "numbers-game",
-  "short_name": "numbers-game",
+  "name": "Learning Numbers",
+  "short_name": "Numbers!",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",

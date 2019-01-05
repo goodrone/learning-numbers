@@ -34,10 +34,14 @@ class Game extends Component {
     }
     guess(value) {
         console.assert(this.state.number !== undefined);
+        const isSuccess = value === this.state.number;
         this.setState({
-            fullscreen: value === this.state.number ? 'success' : 'fail',
+            fullscreen: isSuccess ? 'success' : 'fail',
             number: undefined,
         });
+        if (!isSuccess) {
+            navigator.vibrate(200);
+        }
     }
     start() {
         this.setState({

@@ -86,6 +86,6 @@ class Game extends Component {
 
 export default class App extends Component {
     render() {
-        return <div className="fullscreen"><Game/></div>;
+        return <Game/>;
     }
 }

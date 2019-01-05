@@ -11,10 +11,18 @@ const PlayButton = ({ onClick }) => {
 
 const getRange = n => Array.from(Array(n).keys());
 
+const Disc = () => {
+    return (
+        <svg height="100" width="100">
+            <circle cx="50" cy="50" r="40" fill="black" />
+        </svg>
+    );
+}
+
 const Figures = ({ number }) => {
     return (
         <div>{getRange(number).map(() => {
-            return <span>&#x26ab; </span>;
+            return <Disc/>;
         })}</div>
     );
 }

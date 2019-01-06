@@ -121,6 +121,9 @@ const shapes = {
             dominant-baseline="central">&#10048;</text>,
     circle: ({ cx, cy, step }) =>
         <circle cx={cx} cy={cy} r={step * 0.4} fill="black" stroke="none"/>,
+    square: ({ cx, cy, step }) =>
+        <rect x={cx - step * 0.4} y={cy - step * 0.4}
+            width={step * 0.8} height={step * 0.8} fill="black" stroke="none"/>,
 };
 
 class FigureGrid extends Component {

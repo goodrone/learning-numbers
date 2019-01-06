@@ -56,6 +56,82 @@ const BigSign = ({ symbol, color }) => {
 const Success = () => <BigSign color="green" symbol="✓"/>;
 const Fail = () => <BigSign symbol="&#x274C;"/>;
 
+class DisplayFigures extends Component {
+    componentDidMount() {
+        console.log("MOUNT", this.elem.offsetWidth, this.elem.offsetHeight);
+    }
+    render({ number }) {
+        return (
+            <div className="display" ref={c => this.elem = c}>
+                <Figures number={number}/>
+            </div>
+        );
+    }
+}
+
+const ObjectGrid = ({ object, dim, grid, viewport }) => {
+    const step = Math.floor(Math.min(viewport[0] / dim[0], viewport[1] / dim[1]));
+    const width = (dim[0]) * step;
+    const height = (dim[1]) * step;
+    const offsetX = (viewport[0] - width) / 2;
+    const offsetY = (viewport[1] - height) / 2;
+    return (
+        <svg width={viewport[0]} height={viewport[1]}
+                viewBox={`-${offsetX} -${offsetY} ${viewport[0]} ${viewport[1]}`}>
+            { // DEBUG:
+              // <rect stroke="silver" fill="none" width={width - 0.5} height={height - 0.5}/>
+            }
+            {grid.map(xy => object({
+                cx: (xy[0] + .5) * step,
+                cy: (xy[1] + .5) * step,
+                step,
+            }))}
+        </svg>
+    );
+};
+
+function createRandomGrid(dim, n) {
+    const grid = [];
+    const known = new Set();
+    while (grid.length < n) {
+        const x = Math.floor(Math.random() * dim[0]);
+        const y = Math.floor(Math.random() * dim[1]);
+        const value = x * dim[0] + y;
+        if (known.has(value)) {
+            continue;
+        }
+        known.add(value);
+        grid.push([x, y]);
+    }
+    return grid;
+}
+
+class FigureGrid extends Component {
+    componentDidMount() {
+        const p = this.elem.parentElement;
+        const newState = {viewport: [p.offsetWidth, p.offsetHeight]};
+        // FIXME: without the following, the parent element (p) grows a little
+        // bit vertically
+        p.style = `width: ${p.offsetWidth}px; height: ${p.offsetHeight}px`;
+        this.setState(newState);
+        console.log(newState);
+    }
+    render({ num }, { viewport }) {
+        if (viewport === undefined) {
+            return <div ref={c => this.elem = c} style="height: 100%"/>;
+        }
+        const object = ({ cx, cy, step }) =>
+            <circle cx={cx} cy={cy} r={step * 0.4} fill="black" stroke="none"/>;
+        const step = 100;
+        const dim = [4, 4];
+        const grid = createRandomGrid(dim, num);
+        return (
+            <ObjectGrid viewport={viewport}
+                object={object} grid={grid} step={step} dim={dim}/>
+        );
+    }
+}
+
 class Game extends Component {
     constructor(props) {
         super(props);
@@ -98,7 +174,11 @@ class Game extends Component {
             );
         }
         return [
-            <div className="display"><Figures number={number}/></div>,
+            <div className="display">
+                <div style="flex: 1; width: 100%">
+                    <FigureGrid num={this.state.number}/>
+                </div>
+            </div>,
             <div className="buttons">
                 {knownNumbers.map(value => {
                     return (

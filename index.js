@@ -81,13 +81,14 @@ const ObjectGrid = ({ object, dim, grid, viewport }) => {
             { // DEBUG:
               // <rect stroke="silver" fill="none" width={width - 0.5} height={height - 0.5}/>
             }
-            {grid.map(xy => <g>{object({
-                cx: (xy[0] + .5) * step,
-                cy: (xy[1] + .5) * step,
+            {grid.map(([x, y]) => <g>{object({
+                cx: (x + .5) * step,
+                cy: (y + .5) * step,
                 step,
             })}{
                 // DEBUG:
-                // <rect stroke="none" fill="silver" fill-opacity="0.2" x={xy[0] * step} y={xy[1] * step} width={step} height={step}/>
+                // <rect stroke="none" fill="red" fill-opacity="0.2"
+                //     x={x * step} y={y * step} width={step} height={step}/>
             }</g>)}
         </svg>
     );

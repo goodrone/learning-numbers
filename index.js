@@ -81,11 +81,14 @@ const ObjectGrid = ({ object, dim, grid, viewport }) => {
             { // DEBUG:
               // <rect stroke="silver" fill="none" width={width - 0.5} height={height - 0.5}/>
             }
-            {grid.map(xy => object({
+            {grid.map(xy => <g>{object({
                 cx: (xy[0] + .5) * step,
                 cy: (xy[1] + .5) * step,
                 step,
-            }))}
+            })}{
+                // DEBUG:
+                // <rect stroke="none" fill="silver" fill-opacity="0.2" x={xy[0] * step} y={xy[1] * step} width={step} height={step}/>
+            }</g>)}
         </svg>
     );
 };
@@ -106,6 +109,19 @@ function createRandomGrid(dim, n) {
     return grid;
 }
 
+function randomProperty(obj) {
+    const keys = Object.keys(obj)
+    return obj[keys[keys.length * Math.random() << 0]];
+}
+
+const shapes = {
+    flower: ({ cx, cy }) =>
+        <text x={cx} y={cy} text-anchor="middle"
+            dominant-baseline="central">&#10048;</text>,
+    circle: ({ cx, cy, step }) =>
+        <circle cx={cx} cy={cy} r={step * 0.4} fill="black" stroke="none"/>,
+};
+
 class FigureGrid extends Component {
     componentDidMount() {
         const p = this.elem.parentElement;
@@ -120,8 +136,7 @@ class FigureGrid extends Component {
         if (viewport === undefined) {
             return <div ref={c => this.elem = c} style="height: 100%"/>;
         }
-        const object = ({ cx, cy, step }) =>
-            <circle cx={cx} cy={cy} r={step * 0.4} fill="black" stroke="none"/>;
+        const object = randomProperty(shapes);
         const step = 100;
         const dim = [4, 4];
         const grid = createRandomGrid(dim, num);

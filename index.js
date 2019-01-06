@@ -28,24 +28,6 @@ const PlayButton = ({ onClick }) => {
     return <button type="button" onClick={onClick}>▶</button>;
 };
 
-const getRange = n => Array.from(Array(n).keys());
-
-const Disc = () => {
-    return (
-        <svg height="100" width="100">
-            <circle cx="50" cy="50" r="40" fill="black" />
-        </svg>
-    );
-}
-
-const Figures = ({ number }) => {
-    return (
-        <div>{getRange(number).map(() => {
-            return <Disc/>;
-        })}</div>
-    );
-}
-
 const knownNumbers = [1, 2, 3, 4, 5];
 
 const BigSign = ({ symbol, color }) => {
@@ -55,19 +37,6 @@ const BigSign = ({ symbol, color }) => {
 
 const Success = () => <BigSign color="green" symbol="✓"/>;
 const Fail = () => <BigSign symbol="&#x274C;"/>;
-
-class DisplayFigures extends Component {
-    componentDidMount() {
-        console.log("MOUNT", this.elem.offsetWidth, this.elem.offsetHeight);
-    }
-    render({ number }) {
-        return (
-            <div className="display" ref={c => this.elem = c}>
-                <Figures number={number}/>
-            </div>
-        );
-    }
-}
 
 const ObjectGrid = ({ object, dim, grid, viewport }) => {
     const step = Math.floor(Math.min(viewport[0] / dim[0], viewport[1] / dim[1]));
@@ -134,7 +103,6 @@ class FigureGrid extends Component {
         // bit vertically
         p.style = `width: ${p.offsetWidth}px; height: ${p.offsetHeight}px`;
         this.setState(newState);
-        console.log(newState);
     }
     render({ num }, { viewport }) {
         if (viewport === undefined) {

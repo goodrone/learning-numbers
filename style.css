@@ -44,12 +44,15 @@ h1 {
 }
 @import url('//fonts.googleapis.com/css?family=Roboto+Black');
 button {
-    background: #fea;
+    background: #efe17d;
     border-radius: 10px;
     padding: 4px 15px;
-    font-size: 40px;
-    margin: 4px;
+    font-size: 32px;
+    margin: 4px 8px;
     border: none;
     font-family: "Roboto Black", sans-serif;
     font-weight: 900;
+}
+button:active {
+    background: #a08d00;
 }

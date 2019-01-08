@@ -91,11 +91,16 @@ const textShapeFactory = text => ({ cx, cy }) =>
 const shapes = {
     flower: textShapeFactory(String.fromCharCode(10048)),
     heart: textShapeFactory(String.fromCharCode(9829)),
+    catFace: textShapeFactory(String.fromCodePoint(0x1F431)),
+    cat: textShapeFactory(String.fromCodePoint(0x1F408)),
+    avocado: textShapeFactory(String.fromCodePoint(0x1F951)),
+    lemon: textShapeFactory(String.fromCodePoint(0x1F34B)),
+    boat: textShapeFactory(String.fromCodePoint(0x26F5)),
+    alarmClock: textShapeFactory(String.fromCodePoint(0x23F0)),
+    umbrella: textShapeFactory(String.fromCodePoint(0x2614)),
+    telephone: textShapeFactory(String.fromCodePoint(0x260F)),
     circle: ({ cx, cy, step }) =>
         <circle cx={cx} cy={cy} r={step * 0.4} fill="black" stroke="none"/>,
-    square: ({ cx, cy, step }) =>
-        <rect x={cx - step * 0.4} y={cy - step * 0.4}
-            width={step * 0.8} height={step * 0.8} fill="black" stroke="none"/>,
 };
 
 class FigureGrid extends Component {

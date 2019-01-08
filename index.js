@@ -84,10 +84,13 @@ function randomProperty(obj) {
     return obj[keys[keys.length * Math.random() << 0]];
 }
 
+const textShapeFactory = text => ({ cx, cy }) =>
+    <text x={cx} y={cy} text-anchor="middle"
+        dominant-baseline="central">{text}</text>;
+
 const shapes = {
-    flower: ({ cx, cy }) =>
-        <text x={cx} y={cy} text-anchor="middle"
-            dominant-baseline="central">&#10048;</text>,
+    flower: textShapeFactory(String.fromCharCode(10048)),
+    heart: textShapeFactory(String.fromCharCode(9829)),
     circle: ({ cx, cy, step }) =>
         <circle cx={cx} cy={cy} r={step * 0.4} fill="black" stroke="none"/>,
     square: ({ cx, cy, step }) =>

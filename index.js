@@ -79,29 +79,32 @@ function createRandomGrid(dim, n) {
     return grid;
 }
 
-function randomProperty(obj) {
-    const keys = Object.keys(obj)
-    return obj[keys[keys.length * Math.random() << 0]];
+function pickRandom(arr) {
+    return arr[arr.length * Math.random() << 0];
 }
 
-const textShapeFactory = text => ({ cx, cy }) =>
+const textShapeFactory = codePoint => ({ cx, cy }) =>
     <text x={cx} y={cy} text-anchor="middle"
-        dominant-baseline="central">{text}</text>;
+        dominant-baseline="central">{String.fromCodePoint(codePoint)}</text>;
 
-const shapes = {
-    flower: textShapeFactory(String.fromCharCode(10048)),
-    heart: textShapeFactory(String.fromCharCode(9829)),
-    catFace: textShapeFactory(String.fromCodePoint(0x1F431)),
-    cat: textShapeFactory(String.fromCodePoint(0x1F408)),
-    avocado: textShapeFactory(String.fromCodePoint(0x1F951)),
-    lemon: textShapeFactory(String.fromCodePoint(0x1F34B)),
-    boat: textShapeFactory(String.fromCodePoint(0x26F5)),
-    alarmClock: textShapeFactory(String.fromCodePoint(0x23F0)),
-    umbrella: textShapeFactory(String.fromCodePoint(0x2614)),
-    telephone: textShapeFactory(String.fromCodePoint(0x260F)),
-    circle: ({ cx, cy, step }) =>
-        <circle cx={cx} cy={cy} r={step * 0.4} fill="black" stroke="none"/>,
-};
+const shapes = [
+    9200, 9742, 9749, 9752, 9878, 9881, 9917, 9976, 9986, 127789, 127790,
+    127791, 127792, 127793, 127794, 127795, 127796, 127797, 127798, 127799,
+    127800, 127801, 127802, 127803, 127804, 127805, 127806, 127807, 127808,
+    127809, 127810, 127811, 127812, 127813, 127814, 127815, 127816, 127817,
+    127818, 127819, 127820, 127821, 127822, 127823, 127824, 127825, 127826,
+    127827, 127828, 127829, 127830, 127831, 127835, 127836, 127838, 127839,
+    127840, 127843, 127844, 127846, 127847, 127848, 127849, 127850, 127851,
+    127852, 127854, 127856, 127858, 127859, 127861, 127869, 127871, 127873,
+    127874, 127874, 127874, 127875, 127876, 127880, 127912, 127913, 127922,
+    127925, 127926, 127927, 127928, 127929, 127930, 127931, 127952, 127989,
+    128085, 128086, 128087, 128091, 128092, 128096, 128142, 128144, 128187,
+    128190, 128239, 128251, 128274, 128295, 128298, 128374, 128421, 128722,
+    129344, 129345, 129360, 129361, 129362, 129363, 129364, 129365, 129367,
+    129369, 129370, 129371, 129372, 129373, 129374, 129375, 129379, 129381,
+    129382, 129383, 129384, 129385, 129386, 129388, 129389, 129391, 129406,
+    129472, 129473, 129507, 129508, 129510, 129521, 129522, 129525, 129526,
+].map(textShapeFactory);
 
 class FigureGrid extends Component {
     componentDidMount() {
@@ -116,7 +119,7 @@ class FigureGrid extends Component {
         if (viewport === undefined) {
             return <div ref={c => this.elem = c} style="height: 100%"/>;
         }
-        const object = randomProperty(shapes);
+        const object = pickRandom(shapes);
         const step = 100;
         const dim = [4, 4];
         const grid = createRandomGrid(dim, num);

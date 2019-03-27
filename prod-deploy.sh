@@ -6,6 +6,7 @@ cd "$DIR"
 echo "Checking out code from origin/master..."
 git fetch origin
 git checkout -q --detach origin/master
+yarn
 rm -rf build
 npm run build
 

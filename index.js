@@ -162,6 +162,7 @@ class Game extends Component {
             fullscreen: undefined,
             number: this.getNextNumber(),
         });
+        if (window.gtag) { window.gtag('event', 'Play'); }
     }
     renderInner(number) {
         if (number === undefined) {

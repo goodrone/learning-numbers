@@ -1,5 +1,5 @@
 import './style';
-import { Component } from 'preact';
+import { Component, Fragment } from 'preact';
 
 function disableViewportZoom() {
     const viewport = document.querySelector("meta[name=viewport]");
@@ -130,6 +130,16 @@ class FigureGrid extends Component {
     }
 }
 
+function trackOutboundLink(e) {
+    const url = e.target.href;
+    if (window.gtag) {
+        e.preventDefault();
+        window.gtag('event', 'click', { event_category: 'outbound',
+            event_label: url, transport_type: 'beacon',
+            event_callback: () => document.location = url });
+    }
+}
+
 class Game extends Component {
     constructor(props) {
         super(props);
@@ -192,10 +202,18 @@ class Game extends Component {
     render({}, { number, fullscreen }) {
         const fullscreenClass = fullscreen === undefined ? "" : fullscreen;
         return (
-            <div className={"fullscreen " + fullscreenClass}>
-                {{success: <Success/>, fail: <Fail/>}[fullscreen]}
-                {this.renderInner(number)}
-            </div>
+            <Fragment>
+                <div className={"fullscreen " + fullscreenClass}>
+                    {{success: <Success/>, fail: <Fail/>}[fullscreen]}
+                    {this.renderInner(number)}
+                    {!number && !fullscreen &&
+                        <footer>
+                            <a href="https://github.com/goodrone/learning-numbers"
+                               onClick={trackOutboundLink}>
+                                See this project on GitHub</a>
+                        </footer>}
+                </div>
+            </Fragment>
         );
     }
 }
